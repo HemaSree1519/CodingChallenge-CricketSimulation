@@ -2,7 +2,7 @@
 .idea/
 *.iml
 *.iws
-
+.idea/vcs.xml
 # Maven
 logs/
 target/
