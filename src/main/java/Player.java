@@ -8,30 +8,42 @@ public class Player {
     private boolean isOut;
 
     public Player(String name, List<Double> probability, int totalRuns, int totalBallsPlayed, boolean isOut) {
-        this.name=name;
-        this.probability=probability;
-        this.totalRuns=totalRuns;
-        this.totalBallsPlayed=totalBallsPlayed;
-        this.isOut=isOut;
+        this.name = name;
+        this.probability = probability;
+        this.totalRuns = totalRuns;
+        this.totalBallsPlayed = totalBallsPlayed;
+        this.isOut = isOut;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Double> getPropability() {
+    public List<Double> getProbability() {
         return probability;
     }
 
     public int getTotalRuns() {
-    return totalRuns;
+        return totalRuns;
+    }
+
+    public void setTotalRuns(int totalRuns) {
+        this.totalRuns = totalRuns;
     }
 
     public int getTotalBallsPlayed() {
-    return totalBallsPlayed;
+        return totalBallsPlayed;
+    }
+
+    public void setTotalBallsPlayed(int totalBallsPlayed) {
+        this.totalBallsPlayed = totalBallsPlayed;
+    }
+
+    public void setOut(boolean isOut) {
+        this.isOut = isOut;
     }
 
     public boolean getIsOut() {
-    return isOut;
+        return isOut;
     }
 }
