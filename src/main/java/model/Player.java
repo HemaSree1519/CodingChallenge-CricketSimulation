@@ -4,13 +4,15 @@ import java.util.List;
 
 public class Player {
     private String name;
+    private Team team;
     private List<Double> probability;
     private int totalRuns;
     private int totalBallsPlayed;
     private boolean isOut;
 
-    public Player(String name, List<Double> probability, int totalRuns, int totalBallsPlayed, boolean isOut) {
+    public Player(String name, Team team, List<Double> probability, int totalRuns, int totalBallsPlayed, boolean isOut) {
         this.name = name;
+        this.team=team;
         this.probability = probability;
         this.totalRuns = totalRuns;
         this.totalBallsPlayed = totalBallsPlayed;
@@ -19,6 +21,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public Team getTeam(){
+        return team;
     }
 
     public List<Double> getProbability() {

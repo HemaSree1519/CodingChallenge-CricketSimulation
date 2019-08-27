@@ -12,16 +12,24 @@ import static org.junit.Assert.assertFalse;
 
 public class PlayerTest {
     Player player;
+    Team team;
 
     @Before
     public void setUp() throws Exception {
-        player = new Player("Hema", Arrays.asList(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 93.0), 0, 0, false);
+        team = new Team("Bengaluru", "Chennai", 4, 40, 4);
+        player = new Player("Hema",team, Arrays.asList(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 93.0), 0, 0, false);
     }
 
     @Test
     public void getNameTest() {
         String playerName = player.getName();
         assertEquals("Hema", playerName);
+    }
+
+    @Test
+    public void getTeamTest(){
+        Team playerTeam = player.getTeam();
+        assertEquals(team,playerTeam);
     }
 
     @Test
