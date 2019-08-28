@@ -9,7 +9,7 @@ public class MatchUtils {
     private MatchUtils() {
     }
 
-    public static State strikeChange(List<Player> players, State currentState) {
+    public static State changeStrike(List<Player> players, State currentState) {
 
         State nextState = currentState.copy();
         String striker = currentState.getCurrentStriker();
