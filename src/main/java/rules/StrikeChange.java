@@ -6,7 +6,7 @@ import model.State;
 
 import java.util.List;
 
-public class StrikeChangeRule implements Rules {
+public class StrikeChange implements Rules {
     @Override
     public State nextState(State currentState, List<Player> players) {
         State newState = currentState.copy();

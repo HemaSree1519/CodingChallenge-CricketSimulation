@@ -9,7 +9,7 @@ public class CricketSimulationMain {
     public static void main(String[] args) {
         Team team;
         team = new Team("Bengaluru", "Chennai", 4, 40, 4);
-        List<Player> players = new ArrayList<Player>();
+        List<Player> players = new ArrayList<>();
         players.add(
                 new Player("Kirat Boli", team, Arrays.asList(5.0, 30.0, 25.0, 10.0, 15.0, 1.0, 9.0, 5.0), 0, 0, false));
         players.add(
