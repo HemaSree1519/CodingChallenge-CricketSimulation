@@ -53,7 +53,7 @@ public class PlayerTest {
 
     @Test
     public void getIsOutTest() {
-        boolean playerIsOut = player.getIsOut();
+        boolean playerIsOut = player.isOut();
         assertFalse(playerIsOut);
     }
 }

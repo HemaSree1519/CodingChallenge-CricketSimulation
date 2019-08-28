@@ -86,4 +86,9 @@ public class State {
     public void setCurrentPlayerOut(boolean currentPlayerIsOut) {
         this.currentPlayerIsOut = currentPlayerIsOut;
     }
+
+    public State copy() {
+        return new State(currentStriker, currentNonStriker, currentRunCount, currentWicketLeft, currentBallsPlayed,
+                currentRunsToWin, currentPlayerIsOut, currentPlayerPosition);
+    }
 }

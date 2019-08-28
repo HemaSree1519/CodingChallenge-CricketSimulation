@@ -51,7 +51,7 @@ public class Player {
         this.isOut = isOut;
     }
 
-    public boolean getIsOut() {
+    public boolean isOut() {
         return isOut;
     }
 }
