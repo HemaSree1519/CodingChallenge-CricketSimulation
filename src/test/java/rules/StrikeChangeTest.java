@@ -46,10 +46,11 @@ public class StrikeChangeTest {
         nextState = rules.nextState(currentState, players);
         assertEquals("NS Nodhi", nextState.getCurrentStriker());
     }
+
     @Test
-    public void testStrikeRuleWithOddRunsAndOversComplete() {
-         currentState = new State("Kirat Boli", "NS Nodhi", 1, 4, 6, 25, false, 1);
-         nextState = rules.nextState(currentState, players);
+    public void strikeChangeRuleWithOddRunsAndOversCompleteTest() {
+        currentState = new State("Kirat Boli", "NS Nodhi", 1, 4, 6, 25, false, 1);
+        nextState = rules.nextState(currentState, players);
         assertEquals("Kirat Boli", nextState.getCurrentStriker());
     }
 }

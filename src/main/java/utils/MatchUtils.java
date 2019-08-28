@@ -4,6 +4,7 @@ import model.Player;
 import model.State;
 
 import java.util.List;
+import java.util.Random;
 
 public class MatchUtils {
     private MatchUtils() {
@@ -49,12 +50,17 @@ public class MatchUtils {
         return nextState;
     }
 
-    private static int findPlayerPosition(String playerName, List<Player> players) {
+    public static int findPlayerPosition(String playerName, List<Player> players) {
         players.forEach(player -> player.getName().equals(playerName));
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getName().equals(playerName))
                 return i;
         }
         return -1;
+    }
+
+    public static int randomNumberInRange(int min, int max) {
+        Random random = new Random();
+        return random.nextInt((max - min) + 1) + min;
     }
 }
