@@ -1,4 +1,4 @@
-package matchProcedure;
+package procedure;
 
 import model.Player;
 import model.State;
@@ -7,7 +7,7 @@ import utils.MatchUtils;
 
 import java.util.List;
 
-public class Procedure {
+public class GameProcedure {
     private Rules[] rules;
 
     public Rules[] getRules() {
