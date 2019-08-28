@@ -14,6 +14,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class MatchUtilsTest {
     private List<Player> players;
+    private State currentState;
 
     @Before
     public void setup() {
@@ -27,14 +28,24 @@ public class MatchUtilsTest {
                 new Player("R Rumrah", team, Arrays.asList(20.0, 30.0, 15.0, 5.0, 5.0, 1.0, 4.0, 20.0), 0, 0, false));
         players.add(new Player("Shashi Henra", team, Arrays.asList(30.0, 25.0, 5.0, 0.0, 5.0, 1.0, 4.0, 30.0), 0, 0,
                 false));
+        currentState = new State("Kirat Boli", "NS Nodhi", 4, 3, 5, 25, false, 0);
 
     }
-
+    @Test
+    public void changeStrikeTest(){
+        State nextState = MatchUtils.changeStrike(players, currentState);
+        assertEquals("NS Nodhi", nextState.getCurrentStriker());
+    }
     @Test
     public void changeStrikeWhenStrikerIsOutTest() {
-        State currentState = new State("Kirat Boli", "NS Nodhi", 4, 3, 5, 25, false, 0);
         players.get(0).setOut(true);
         State nextState = MatchUtils.changeStrike(players, currentState);
         assertEquals("R Rumrah", nextState.getCurrentStriker());
+    }
+    @Test
+    public void changeStrikeWhenNonStrikerIsOutTest(){
+        players.get(1).setOut(true);
+        State nextState = MatchUtils.changeStrike(players, currentState);
+        assertEquals("R Rumrah", nextState.getCurrentNonStriker());
     }
 }
