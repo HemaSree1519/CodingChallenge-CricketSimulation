@@ -16,6 +16,7 @@ public class StrikeChangeTest {
     private List<Player> players;
     private State currentState;
     private Rules rules;
+    private State nextState;
 
     @Before
     public void setup() {
@@ -29,13 +30,26 @@ public class StrikeChangeTest {
                 new Player("R Rumrah", team, Arrays.asList(20.0, 30.0, 15.0, 5.0, 5.0, 1.0, 4.0, 20.0), 0, 0, false));
         players.add(new Player("Shashi Henra", team, Arrays.asList(30.0, 25.0, 5.0, 0.0, 5.0, 1.0, 4.0, 30.0), 0, 0,
                 false));
-        currentState = new State("Kirat Boli", "NS Nodhi", 2, 4, 6, 25, false, 0);
         rules = new StrikeChange();
     }
 
     @Test
     public void strikeChangeRuleWithOverCompleteTest() {
-        State nextState = rules.nextState(currentState, players);
+        currentState = new State("Kirat Boli", "NS Nodhi", 2, 4, 6, 25, false, 0);
+        nextState = rules.nextState(currentState, players);
         assertEquals("NS Nodhi", nextState.getCurrentStriker());
+    }
+
+    @Test
+    public void strikeChangeRuleWithOddRunsTest() {
+        currentState = new State("Kirat Boli", "NS Nodhi", 1, 4, 5, 25, false, 0);
+        nextState = rules.nextState(currentState, players);
+        assertEquals("NS Nodhi", nextState.getCurrentStriker());
+    }
+    @Test
+    public void testStrikeRuleWithOddRunsAndOversComplete() {
+         currentState = new State("Kirat Boli", "NS Nodhi", 1, 4, 6, 25, false, 1);
+         nextState = rules.nextState(currentState, players);
+        assertEquals("Kirat Boli", nextState.getCurrentStriker());
     }
 }
