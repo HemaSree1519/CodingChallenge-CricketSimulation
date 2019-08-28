@@ -31,19 +31,22 @@ public class MatchUtilsTest {
         currentState = new State("Kirat Boli", "NS Nodhi", 4, 3, 5, 25, false, 0);
 
     }
+
     @Test
-    public void changeStrikeTest(){
+    public void changeStrikeTest() {
         State nextState = MatchUtils.changeStrike(players, currentState);
         assertEquals("NS Nodhi", nextState.getCurrentStriker());
     }
+
     @Test
     public void changeStrikeWhenStrikerIsOutTest() {
         players.get(0).setOut(true);
         State nextState = MatchUtils.changeStrike(players, currentState);
         assertEquals("R Rumrah", nextState.getCurrentStriker());
     }
+
     @Test
-    public void changeStrikeWhenNonStrikerIsOutTest(){
+    public void changeStrikeWhenNonStrikerIsOutTest() {
         players.get(1).setOut(true);
         State nextState = MatchUtils.changeStrike(players, currentState);
         assertEquals("R Rumrah", nextState.getCurrentNonStriker());
