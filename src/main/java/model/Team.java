@@ -7,7 +7,7 @@ public class Team {
     private int wickets;
     private int runsToWin;
 
-    public Team(String playingTeam,String oppositionTeam, int overs, int wickets, int runsToWin) {
+    public Team(String playingTeam, String oppositionTeam, int overs, int wickets, int runsToWin) {
         this.playingTeam = playingTeam;
         this.oppositionTeam = oppositionTeam;
         this.wickets = wickets;

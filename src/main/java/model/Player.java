@@ -12,18 +12,22 @@ public class Player {
 
     public Player(String name, Team team, List<Double> probability, int totalRuns, int totalBallsPlayed, boolean isOut) {
         this.name = name;
-        this.team=team;
+        this.team = team;
         this.probability = probability;
         this.totalRuns = totalRuns;
         this.totalBallsPlayed = totalBallsPlayed;
         this.isOut = isOut;
     }
 
+    public Player(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
 
-    public Team getTeam(){
+    public Team getTeam() {
         return team;
     }
 
@@ -47,11 +51,11 @@ public class Player {
         this.totalBallsPlayed = totalBallsPlayed;
     }
 
-    public void setOut(boolean isOut) {
-        this.isOut = isOut;
-    }
-
     public boolean isOut() {
         return isOut;
+    }
+
+    public void setOut(boolean isOut) {
+        this.isOut = isOut;
     }
 }

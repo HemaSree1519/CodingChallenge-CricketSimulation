@@ -1,8 +1,8 @@
 package rules;
 
-import utils.MatchUtils;
 import model.Player;
 import model.State;
+import utils.MatchUtils;
 
 import java.util.List;
 

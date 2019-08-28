@@ -1,10 +1,13 @@
 package simulator;
 
+import exceptions.InvalidTeamException;
+import exceptions.NoPlayersException;
 import model.Player;
 import model.State;
 import model.Team;
 import procedure.GameProcedure;
 import rules.Rules;
+import utils.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +19,32 @@ public class GameSimulator {
         this.gameProcedure = gameProcedure;
     }
 
+    public List<Player> applyRules(List<Player> players) throws NoPlayersException, InvalidTeamException {
+        if (players.isEmpty()) {
+            throw new NoPlayersException("Team size is insufficient");
+        }
+        final Team team = players.get(0).getTeam();
+
+        // Team Validation
+        if (ValidationUtils.isInvalidTeam(team)) {
+            throw new InvalidTeamException(
+                    "Team is Invalid as overs or wickets or runs to win are less than 1 or teams name might be not provided");
+        }
+        final int totalBalls = players.get(0).getTeam().getOvers() * 6;
+        final Player firstPlayer = players.get(0) != null ? players.get(0) : new Player("");
+        final Player secondPlayer = players.size() > 1 ? players.get(1) : new Player("");
+
+//        LOGGER.trace("Maximum number of balls team has {}", totalBalls);
+
+        State currentState = new State(firstPlayer.getName(), secondPlayer.getName(), 0, team.getWickets(),
+                0, team.getRunsToWin(), false, 0);
+
+        return simulateMatch(currentState, players, team, totalBalls);
+    }
+
     public List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
         List<Player> updatedPlayers = new ArrayList<>(players);
-        System.out.println("Initial State :" + currentState);
         while (currentState.getCurrentBallsPlayed() < totalBalls) {
             int runsScored = gameProcedure.simulateRuns(currentState, players);
             int currentPlayerPosition = currentState.getCurrentPlayerPosition();
@@ -36,14 +61,12 @@ public class GameSimulator {
             }
             currentPlayer.setTotalBallsPlayed(currentPlayer.getTotalBallsPlayed() + 1);
             currentState.setCurrentBallsPlayed(currentState.getCurrentBallsPlayed() + 1);
-            System.out.println("Intermediate :" + currentState);
             currentState = processNextState(updatedPlayers, currentState);
 
             if (currentState.getCurrentWicketLeft() == 0 || totalScore > team.getRunsToWin()) {
                 break;
             }
         }
-        System.out.println("Final : " + currentState);
         if (currentState.getCurrentRunsToWin() <= 0) {
             System.out.println("Final Result - Bengaluru won by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining");
         } else {
