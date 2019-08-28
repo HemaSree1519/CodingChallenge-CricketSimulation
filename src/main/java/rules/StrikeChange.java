@@ -1,6 +1,6 @@
 package rules;
 
-import Utils.MatchUtils;
+import utils.MatchUtils;
 import model.Player;
 import model.State;
 

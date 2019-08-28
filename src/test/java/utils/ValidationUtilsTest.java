@@ -1,7 +1,6 @@
-package Utils;
+package utils;
 
 import model.Team;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
