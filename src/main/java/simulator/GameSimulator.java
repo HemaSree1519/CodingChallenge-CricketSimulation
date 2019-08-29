@@ -39,7 +39,7 @@ public class GameSimulator {
     private List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
         List<Player> updatedPlayers = new ArrayList<>(players);
-        while (currentState.getCurrentBallsPlayed() < totalBalls) {
+        while (currentState.getCurrentBallsPlayed() < totalBalls && currentState.getCurrentRunCount() < team.getRunsToWin()) {
             int runsScored = gameProcedure.simulateRuns(currentState, players);
             int currentPlayerPosition = currentState.getCurrentPlayerPosition();
             Player currentPlayer = updatedPlayers.get(currentPlayerPosition);

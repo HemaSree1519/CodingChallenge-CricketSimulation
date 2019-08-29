@@ -10,7 +10,6 @@ import simulator.GameSimulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class CricketSimulationMain {
@@ -21,7 +20,7 @@ public class CricketSimulationMain {
         GameSimulator gameSimulator = new GameSimulator(gameProcedure);
         Rules[] rules;
 
-        team = new Team("Bengaluru", "Chennai", 4, 4, 40);
+        team = new Team("Bengaluru", "Chennai", 4, 3, 40);
         players.add(
                 new Player("Kirat Boli", team, Arrays.asList(5.0, 30.0, 25.0, 10.0, 15.0, 1.0, 9.0, 5.0), 0, 0, false));
         players.add(
@@ -36,7 +35,7 @@ public class CricketSimulationMain {
         try {
             List<Player> updatedPlayers = gameSimulator.applyRules(players);
             for (Player p : updatedPlayers) {
-                System.out.println(p.getName()+" - "+p.getTotalRuns()+" ("+p.getTotalBallsPlayed()+" balls)");
+                System.out.println(p.getName()+" - "+p.getTotalRuns()+(p.isOut()?"":"*")+" ("+p.getTotalBallsPlayed()+" balls)");
             }
         } catch (NoPlayersException | InvalidTeamException exp) {
             System.out.println(exp);
