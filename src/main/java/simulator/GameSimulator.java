@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameSimulator {
-    private RunsGenerator gameProcedure;
+    private RunsGenerator runsGenerator;
 
-    public GameSimulator(RunsGenerator gameProcedure) {
-        this.gameProcedure = gameProcedure;
+    public GameSimulator(RunsGenerator runsGenerator) {
+        this.runsGenerator = runsGenerator;
     }
 
     public List<Player> applyRules(List<Player> players) throws NoPlayersException, InvalidTeamException {
@@ -40,9 +40,10 @@ public class GameSimulator {
     private List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
         List<Player> updatedPlayers = new ArrayList<>(players);
-        System.out.println("\033[34;1mCricket match commentary\033[0m\n");
+        System.out.println("\033[34;1mCricket match commentary\033[0m");
+        System.out.println("\n\033[1m\033[1m" + team.getOvers() + " overs left. " + currentState.getCurrentRunsToWin() + " runs to win\033[0m\n");
         while (currentState.getCurrentBallsPlayed() < totalBalls && currentState.getCurrentRunCount() < team.getRunsToWin()) {
-            int runsScored = gameProcedure.scoreRuns(currentState, players);
+            int runsScored = runsGenerator.scoreRuns(currentState, players);
             int currentPlayerPosition = currentState.getCurrentPlayerPosition();
             Player currentPlayer = updatedPlayers.get(currentPlayerPosition);
             if (runsScored == -1) {
@@ -73,23 +74,23 @@ public class GameSimulator {
     }
 
     private void displayCommentary(State currentState, Team team) {
-        int numberOfBalls = currentState.getCurrentBallsPlayed();
-        String round = String.valueOf(Math.round(numberOfBalls / 6));
-        String mod = String.valueOf(numberOfBalls % 6);
-        if (mod.equals("0")) {
-            System.out.println(((Integer.parseInt(round)-1) + "." + 6)+" " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
-            int oversLeft = team.getOvers() - Integer.parseInt(round);
-            if(currentState.getCurrentRunsToWin()>0)
-            System.out.println("\n\033[1m\033[1m" + oversLeft + (oversLeft > 1 ? " overs" : " over") + " left. "+ currentState.getCurrentRunsToWin()+" runs to win\033[0m\n");
+        int ballsPlayed = currentState.getCurrentBallsPlayed();
+        String overs = String.valueOf(Math.round(ballsPlayed / 6));
+        String balls = String.valueOf(ballsPlayed % 6);
+        if (balls.equals("0")) {
+            System.out.println(((Integer.parseInt(overs) - 1) + "." + 6) + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
+            if (currentState.getCurrentRunsToWin() > 0 && currentState.getCurrentWicketLeft() > 0) {
+                int oversLeft = team.getOvers() - Integer.parseInt(overs);
+                System.out.println("\n\033[1m\033[1m" + oversLeft + (oversLeft > 1 ? " overs" : " over") + " left. " + currentState.getCurrentRunsToWin() + " runs to win\033[0m\n");
+            }
         } else {
-            double numberOfOvers = Double.valueOf(round + "." + mod);
-            System.out.println(numberOfOvers + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
+            System.out.println(Double.valueOf(overs + "." + balls) + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
         }
     }
 
     private State processNextState(List<Player> players, State currentState) {
         State newState = currentState.copy();
-        for (Rules rules : gameProcedure.getRules()) {
+        for (Rules rules : runsGenerator.getRules()) {
             newState = rules.nextState(newState, players);
         }
         return newState;
