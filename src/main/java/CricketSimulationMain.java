@@ -2,7 +2,7 @@ import exceptions.InvalidTeamException;
 import exceptions.NoPlayersException;
 import model.Player;
 import model.Team;
-import procedure.GameProcedure;
+import runs.RunsGenerator;
 import rules.PlayerOut;
 import rules.Rules;
 import rules.StrikeChange;
@@ -16,7 +16,7 @@ public class CricketSimulationMain {
     public static void main(String[] args) {
         Team team;
         List<Player> players = new ArrayList<>();
-        GameProcedure gameProcedure = new GameProcedure();
+        RunsGenerator gameProcedure = new RunsGenerator();
         GameSimulator gameSimulator = new GameSimulator(gameProcedure);
         Rules[] rules;
 

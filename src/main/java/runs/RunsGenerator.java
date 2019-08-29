@@ -1,4 +1,4 @@
-package procedure;
+package runs;
 
 import model.Player;
 import model.State;
@@ -7,7 +7,7 @@ import utils.MatchUtils;
 
 import java.util.List;
 
-public class GameProcedure {
+public class RunsGenerator {
     private Rules[] rules;
 
     public Rules[] getRules() {
@@ -18,7 +18,7 @@ public class GameProcedure {
         this.rules = rules;
     }
 
-    public int simulateRuns(State currentState, List<Player> players) {
+    public int scoreRuns(State currentState, List<Player> players) {
         String playerName = currentState.getCurrentStriker();
         int playerPosition = MatchUtils.findPlayerPosition(playerName, players);
         double sumOfPlayerProbabilities = players.get(playerPosition).getProbability().stream()

@@ -5,17 +5,17 @@ import exceptions.NoPlayersException;
 import model.Player;
 import model.State;
 import model.Team;
-import procedure.GameProcedure;
 import rules.Rules;
+import runs.RunsGenerator;
 import utils.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameSimulator {
-    private GameProcedure gameProcedure;
+    private RunsGenerator gameProcedure;
 
-    public GameSimulator(GameProcedure gameProcedure) {
+    public GameSimulator(RunsGenerator gameProcedure) {
         this.gameProcedure = gameProcedure;
     }
 
@@ -36,11 +36,13 @@ public class GameSimulator {
 
         return simulateMatch(currentState, players, team, totalBalls);
     }
+
     private List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
         List<Player> updatedPlayers = new ArrayList<>(players);
+        System.out.println("\033[34;1mCricket match commentary\033[0m\n");
         while (currentState.getCurrentBallsPlayed() < totalBalls && currentState.getCurrentRunCount() < team.getRunsToWin()) {
-            int runsScored = gameProcedure.simulateRuns(currentState, players);
+            int runsScored = gameProcedure.scoreRuns(currentState, players);
             int currentPlayerPosition = currentState.getCurrentPlayerPosition();
             Player currentPlayer = updatedPlayers.get(currentPlayerPosition);
             if (runsScored == -1) {
@@ -55,6 +57,7 @@ public class GameSimulator {
             }
             currentPlayer.setTotalBallsPlayed(currentPlayer.getTotalBallsPlayed() + 1);
             currentState.setCurrentBallsPlayed(currentState.getCurrentBallsPlayed() + 1);
+            displayCommentary(currentState, team);
             currentState = processNextState(updatedPlayers, currentState);
 
             if (currentState.getCurrentWicketLeft() == 0 || totalScore > team.getRunsToWin()) {
@@ -62,11 +65,26 @@ public class GameSimulator {
             }
         }
         if (currentState.getCurrentRunsToWin() <= 0) {
-            System.out.println("\033[1mBengaluru won by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
+            System.out.println("\n\033[1mBengaluru won by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
         } else {
-            System.out.println("\033[1mBengaluru lost by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
+            System.out.println("\n\033[1mBengaluru lost by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
         }
         return updatedPlayers;
+    }
+
+    private void displayCommentary(State currentState, Team team) {
+        int numberOfBalls = currentState.getCurrentBallsPlayed();
+        String round = String.valueOf(Math.round(numberOfBalls / 6));
+        String mod = String.valueOf(numberOfBalls % 6);
+        if (mod.equals("0")) {
+            System.out.println(((Integer.parseInt(round)-1) + "." + 6)+" " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
+            int oversLeft = team.getOvers() - Integer.parseInt(round);
+            if(currentState.getCurrentRunsToWin()>0)
+            System.out.println("\n\033[1m\033[1m" + oversLeft + (oversLeft > 1 ? " overs" : " over") + " left. "+ currentState.getCurrentRunsToWin()+" runs to win\033[0m\n");
+        } else {
+            double numberOfOvers = Double.valueOf(round + "." + mod);
+            System.out.println(numberOfOvers + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
+        }
     }
 
     private State processNextState(List<Player> players, State currentState) {
