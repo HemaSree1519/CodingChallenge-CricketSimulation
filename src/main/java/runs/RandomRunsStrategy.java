@@ -7,7 +7,7 @@ import utils.MatchUtils;
 
 import java.util.List;
 
-public class RunsGenerator {
+public abstract class RandomRunsStrategy implements RunsStrategy {
     private Rules[] rules;
 
     public Rules[] getRules() {

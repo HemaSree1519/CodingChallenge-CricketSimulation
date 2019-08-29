@@ -6,17 +6,18 @@ import model.Player;
 import model.State;
 import model.Team;
 import rules.Rules;
-import runs.RunsGenerator;
+import runs.RandomRunsStrategy;
+import runs.RunsStrategy;
 import utils.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameSimulator {
-    private RunsGenerator runsGenerator;
+    private RunsStrategy randomRunsStrategy;
 
-    public GameSimulator(RunsGenerator runsGenerator) {
-        this.runsGenerator = runsGenerator;
+    public GameSimulator(RunsStrategy randomRunsStrategy) {
+        this.randomRunsStrategy = randomRunsStrategy;
     }
 
     public List<Player> applyRules(List<Player> players) throws NoPlayersException, InvalidTeamException {
@@ -43,7 +44,7 @@ public class GameSimulator {
         System.out.println("\033[34;1mCricket match commentary\033[0m");
         System.out.println("\n\033[1m\033[1m" + team.getOvers() + " overs left. " + currentState.getCurrentRunsToWin() + " runs to win\033[0m\n");
         while (currentState.getCurrentBallsPlayed() < totalBalls && currentState.getCurrentRunCount() < team.getRunsToWin()) {
-            int runsScored = runsGenerator.scoreRuns(currentState, players);
+            int runsScored = randomRunsStrategy.scoreRuns(currentState, players);
             int currentPlayerPosition = currentState.getCurrentPlayerPosition();
             Player currentPlayer = updatedPlayers.get(currentPlayerPosition);
             if (runsScored == -1) {
@@ -90,7 +91,7 @@ public class GameSimulator {
 
     private State processNextState(List<Player> players, State currentState) {
         State newState = currentState.copy();
-        for (Rules rules : runsGenerator.getRules()) {
+        for (Rules rules : randomRunsStrategy.getRules()) {
             newState = rules.nextState(newState, players);
         }
         return newState;

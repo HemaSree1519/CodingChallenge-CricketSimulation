@@ -2,10 +2,12 @@ import exceptions.InvalidTeamException;
 import exceptions.NoPlayersException;
 import model.Player;
 import model.Team;
-import runs.RunsGenerator;
+import runs.DefaultRunsStrategy;
+import runs.RandomRunsStrategy;
 import rules.PlayerOut;
 import rules.Rules;
 import rules.StrikeChange;
+import runs.RunsStrategy;
 import simulator.GameSimulator;
 
 import java.util.ArrayList;
@@ -16,8 +18,8 @@ public class CricketSimulationMain {
     public static void main(String[] args) {
         Team team;
         List<Player> players = new ArrayList<>();
-        RunsGenerator gameProcedure = new RunsGenerator();
-        GameSimulator gameSimulator = new GameSimulator(gameProcedure);
+        RunsStrategy randomRunsStrategy = new DefaultRunsStrategy();
+        GameSimulator gameSimulator = new GameSimulator(randomRunsStrategy);
         Rules[] rules;
 
         team = new Team("Bengaluru", "Chennai", 4, 3, 40);
@@ -30,7 +32,7 @@ public class CricketSimulationMain {
         players.add(
                 new Player("Shashi Henra", team, Arrays.asList(30.0, 25.0, 5.0, 0.0, 5.0, 1.0, 4.0, 30.0), 0, 0, false));
         rules = new Rules[]{new PlayerOut(), new StrikeChange()};
-        gameProcedure.setRules(rules);
+        randomRunsStrategy.setRules(rules);
 
         try {
             List<Player> updatedPlayers = gameSimulator.applyRules(players);

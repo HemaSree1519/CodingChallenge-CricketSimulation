@@ -1,10 +1,5 @@
 package model;
 
-import rules.Rules;
-import runs.RunsGenerator;
-
-import java.util.List;
-
 public class State {
 
     private String currentStriker;
