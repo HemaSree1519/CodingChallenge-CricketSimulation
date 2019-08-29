@@ -24,8 +24,6 @@ public class GameSimulator {
             throw new NoPlayersException("Team size is insufficient");
         }
         final Team team = players.get(0).getTeam();
-
-        // Team Validation
         if (ValidationUtils.isInvalidTeam(team)) {
             throw new InvalidTeamException(
                     "Team is Invalid as overs or wickets or runs to win are less than 1 or teams name might be not provided");
@@ -33,16 +31,12 @@ public class GameSimulator {
         final int totalBalls = players.get(0).getTeam().getOvers() * 6;
         final Player firstPlayer = players.get(0) != null ? players.get(0) : new Player("");
         final Player secondPlayer = players.size() > 1 ? players.get(1) : new Player("");
-
-//        LOGGER.trace("Maximum number of balls team has {}", totalBalls);
-
         State currentState = new State(firstPlayer.getName(), secondPlayer.getName(), 0, team.getWickets(),
                 0, team.getRunsToWin(), false, 0);
 
         return simulateMatch(currentState, players, team, totalBalls);
     }
-
-    public List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
+    private List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
         List<Player> updatedPlayers = new ArrayList<>(players);
         while (currentState.getCurrentBallsPlayed() < totalBalls) {
@@ -68,9 +62,9 @@ public class GameSimulator {
             }
         }
         if (currentState.getCurrentRunsToWin() <= 0) {
-            System.out.println("Final Result - Bengaluru won by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining");
+            System.out.println("\033[1mBengaluru won by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
         } else {
-            System.out.println("Final Result - Bengaluru lost by" + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining");
+            System.out.println("\033[1mBengaluru lost by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
         }
         return updatedPlayers;
     }
