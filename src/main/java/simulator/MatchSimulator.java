@@ -1,5 +1,6 @@
 package simulator;
 
+import commentary.MatchCommentary;
 import exceptions.InvalidTeamException;
 import exceptions.NoPlayersException;
 import model.Player;
@@ -38,6 +39,7 @@ public class MatchSimulator {
 
     private List<Player> simulateMatch(State currentState, List<Player> players, Team team, int totalBalls) {
         int totalScore = 0;
+        MatchCommentary commentary = new MatchCommentary();
         List<Player> updatedPlayers = new ArrayList<>(players);
         System.out.println("\033[34;1mCricket match commentary\033[0m");
         System.out.println("\n\033[1m\033[1m" + team.getOvers() + " overs left. " + currentState.getCurrentRunsToWin() + " runs to win\033[0m\n");
@@ -57,7 +59,7 @@ public class MatchSimulator {
             }
             currentPlayer.setTotalBallsPlayed(currentPlayer.getTotalBallsPlayed() + 1);
             currentState.setCurrentBallsPlayed(currentState.getCurrentBallsPlayed() + 1);
-            displayCommentary(currentState, team);
+            commentary.display(currentState, team);
             currentState = processNextState(updatedPlayers, currentState);
 
             if (currentState.getCurrentWicketLeft() == 0 || totalScore > team.getRunsToWin()) {
@@ -70,21 +72,6 @@ public class MatchSimulator {
             System.out.println("\n\033[1mBengaluru lost by " + currentState.getCurrentWicketLeft() + " wicket and " + (totalBalls - currentState.getCurrentBallsPlayed()) + " balls remaining\033[0m");
         }
         return updatedPlayers;
-    }
-
-    private void displayCommentary(State currentState, Team team) {
-        int ballsPlayed = currentState.getCurrentBallsPlayed();
-        String overs = String.valueOf(Math.round(ballsPlayed / 6));
-        String balls = String.valueOf(ballsPlayed % 6);
-        if (balls.equals("0")) {
-            System.out.println(((Integer.parseInt(overs) - 1) + "." + 6) + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
-            if (currentState.getCurrentRunsToWin() > 0 && currentState.getCurrentWicketLeft() > 0) {
-                int oversLeft = team.getOvers() - Integer.parseInt(overs);
-                System.out.println("\n\033[1m\033[1m" + oversLeft + (oversLeft > 1 ? " overs" : " over") + " left. " + currentState.getCurrentRunsToWin() + " runs to win\033[0m\n");
-            }
-        } else {
-            System.out.println(Double.valueOf(overs + "." + balls) + " " + currentState.getCurrentStriker() + " scores " + currentState.getCurrentRunCount() + (currentState.getCurrentRunCount() > 1 ? " runs" : " run"));
-        }
     }
 
     private State processNextState(List<Player> players, State currentState) {
