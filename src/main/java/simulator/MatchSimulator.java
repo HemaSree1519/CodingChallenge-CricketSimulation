@@ -12,10 +12,10 @@ import utils.ValidationUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameSimulator {
+public class MatchSimulator {
     private RunsStrategy randomRunsStrategy;
 
-    public GameSimulator(RunsStrategy randomRunsStrategy) {
+    public MatchSimulator(RunsStrategy randomRunsStrategy) {
         this.randomRunsStrategy = randomRunsStrategy;
     }
 

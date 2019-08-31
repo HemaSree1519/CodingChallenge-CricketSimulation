@@ -7,7 +7,7 @@ import rules.PlayerOut;
 import rules.Rules;
 import rules.StrikeChange;
 import runs.RunsStrategy;
-import simulator.GameSimulator;
+import simulator.MatchSimulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ public class CricketSimulationMain {
         Team team;
         List<Player> players = new ArrayList<>();
         RunsStrategy randomRunsStrategy = new DefaultRunsStrategy();
-        GameSimulator gameSimulator = new GameSimulator(randomRunsStrategy);
+        MatchSimulator matchSimulator = new MatchSimulator(randomRunsStrategy);
         Rules[] rules;
 
         team = new Team("Bengaluru", "Chennai", 4, 3, 40);
@@ -34,7 +34,7 @@ public class CricketSimulationMain {
         randomRunsStrategy.setRules(rules);
 
         try {
-            List<Player> updatedPlayers = gameSimulator.applyRules(players);
+            List<Player> updatedPlayers = matchSimulator.applyRules(players);
             for (Player p : updatedPlayers) {
                 System.out.println(p.getName()+" - "+p.getTotalRuns()+(p.isOut()?"":"*")+" ("+p.getTotalBallsPlayed()+" balls)");
             }
