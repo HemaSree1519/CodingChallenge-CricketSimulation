@@ -3,7 +3,6 @@ import exceptions.NoPlayersException;
 import model.Player;
 import model.Team;
 import runs.DefaultRunsStrategy;
-import runs.RandomRunsStrategy;
 import rules.PlayerOut;
 import rules.Rules;
 import rules.StrikeChange;

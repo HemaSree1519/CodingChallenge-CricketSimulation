@@ -1,6 +1,30 @@
 # CricketSimulation
 CricketSimulation is to simulate the cricket match (ball by ball) using weighted random number generation based on probability to determine the runs scored per ball.
 
+### Prerequisites
+- Java 8, Maven
+
+### Run Directly From Jar
+- Run Main Class
+   ```sh
+    $ java -cp target/CricketSimulation-1.0-SNAPSHOT.jar CricketSimulationMain
+    ```
+    
+### Build and Run
+
+- Run maven clean install
+  ```sh
+    $ mvn clean install
+    ```
+-  ```sh
+    $ java -cp target/CricketSimulation-1.0-SNAPSHOT.jar CricketSimulationMain
+   ```
+### Run tests
+- Run all tests
+  ```sh
+    $ mvn clean test
+    ```
+
 # Sample output
 
 **1. Match_won**
