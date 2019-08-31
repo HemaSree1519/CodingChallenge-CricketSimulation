@@ -4,12 +4,7 @@ CricketSimulation is to simulate the cricket match (ball by ball) using weighted
 ### Prerequisites
 - Java 8, Maven
 
-### Run Directly From Jar
-- Run Main Class
-   ```sh
-    $ java -cp target/CricketSimulation-1.0-SNAPSHOT.jar CricketSimulationMain
-    ```
-    
+
 ### Build and Run
 
 - Run maven clean install
