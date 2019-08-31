@@ -6,7 +6,6 @@ import model.Player;
 import model.State;
 import model.Team;
 import rules.Rules;
-import runs.RandomRunsStrategy;
 import runs.RunsStrategy;
 import utils.ValidationUtils;
 
@@ -22,12 +21,11 @@ public class GameSimulator {
 
     public List<Player> applyRules(List<Player> players) throws NoPlayersException, InvalidTeamException {
         if (players.isEmpty()) {
-            throw new NoPlayersException("Team size is insufficient");
+            throw new NoPlayersException();
         }
         final Team team = players.get(0).getTeam();
         if (ValidationUtils.isInvalidTeam(team)) {
-            throw new InvalidTeamException(
-                    "Team is Invalid as overs or wickets or runs to win are less than 1 or teams name might be not provided");
+            throw new InvalidTeamException();
         }
         final int totalBalls = players.get(0).getTeam().getOvers() * 6;
         final Player firstPlayer = players.get(0) != null ? players.get(0) : new Player("");
